@@ -3,10 +3,10 @@ import Button from './Button';
 const Hero : React.FC = ()=>{
 
   return (
-    <div className='w-full h-[90vh] flex items-center justify-center'>
-      <div className='w-full py-10 mx-15 flex items-center '>
-        <div className='w-1/2 '>
-          <h1 className='text-5xl font-bold font-[poppins] text-white'>
+    <div className='mt-25 md:mt-10 w-full flex items-center justify-cente py-10 md:py-5'>
+      <div className='w-full py-10 md:mx-15 flex flex-col-reverse gap-40 md:flex-row items-center '>
+        <div className='m-7 md:w-1/2 mt-5 mx-3'>
+          <h1 className='text-3xl md:text-5xl font-bold font-[poppins] text-white'>
             The World's Biggest <br /> Inventory Managment System
           </h1>
           <p className='text-gray-600 my-7'>
@@ -25,8 +25,8 @@ const Hero : React.FC = ()=>{
             />
           </div>
         </div>
-        <div className='relative w-1/2 flex items-center justify-center'>
-          <div className='fixed right-0'>
+        <div className='relative w-full m-7 md:w-1/2 flex items-center justify-center'>
+          <div className='fixed right-0 mt-7'>
             <Image
               src={'/banner2.png'}
               width={500}

@@ -19,7 +19,7 @@ const Navigation : React.FC = () =>{
   }
 
   return (
-    <div className='fixed top-0 left-0 w-full z-50'>
+    <div className='fixed md:static top-0 left-0 w-full z-50'>
       <div className='flex items-center justify-between px-7 md:mx-15 my-5 '>
         <Link
           href={'/'}
@@ -34,7 +34,7 @@ const Navigation : React.FC = () =>{
         <nav className={
           ` ${openNavigation ? 'flex' : 'hidden'} z-50 fixed md:flex top-[5rem] left-0 right-0 bottom-0 md:static`
         }>
-          <div className='flex flex-col md:flex-row gap-3 z-10 bg-green-600 w-full'>
+          <div className='flex flex-col md:flex-row gap-3 z-10 bg-[#0D0F42] w-full'>
             {
               navLinks.map((items) =>(
                 <Link
