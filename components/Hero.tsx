@@ -4,7 +4,7 @@ const Hero : React.FC = ()=>{
 
   return (
     <div className='w-full h-[90vh] flex items-center justify-center'>
-      <div className='w-[85%] flex items-center'>
+      <div className='w-full py-10 mx-15 flex items-center '>
         <div className='w-1/2 '>
           <h1 className='text-5xl font-bold font-[poppins] text-white'>
             The World's Biggest <br /> Inventory Managment System
@@ -25,8 +25,8 @@ const Hero : React.FC = ()=>{
             />
           </div>
         </div>
-        <div className='w-1/2 flex items-center justify-center'>
-          <div className='w-[90%] h-[80%]'>
+        <div className='relative w-1/2 flex items-center justify-center'>
+          <div className='fixed right-0'>
             <Image
               src={'/banner2.png'}
               width={500}
