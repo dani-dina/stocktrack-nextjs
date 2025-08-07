@@ -75,12 +75,5 @@ export const navLinks : NavLink[] = [
     label: 'Contact',
     href: '/#contact',
     isExternal: false,
-  },
-  {
-    id : '7',
-    label: 'GitHub',
-    href: 'https://github.com/your-org/your-project',
-    isExternal: true,
-    icon: 'github', 
-  },
+  }
 ];

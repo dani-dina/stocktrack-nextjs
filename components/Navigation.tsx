@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { set } from 'zod';
 
 const Navigation : React.FC = () =>{
-  const [toggle,setToggle] = useState(true);
+  const [toggle,setToggle] = useState(false);
 
   const handleMenu = () => {
     if(toggle){
@@ -23,29 +23,34 @@ const Navigation : React.FC = () =>{
 
   return (
     <div className='w-full'>
-      <div className='my-4 flex items-center justify-around'>
+      <div className='w-full my-4 flex items-center justify-around'>
         {/* Logo section */}
-        <Image
+        <Link
+          href={'/'}
+        >
+          <Image
           src={'/logo.png'}
           width={200}
           height={70}
           alt='Logo'
         />
+        </Link>
         {/* Right side navigations*/}
-        <div className='hidden md:flex w-3/5 items-center justify-between'>
-          <nav className='flex gap-4'>
+        <div className={`${toggle ? 'flex' : 'hidden'} md:flex w-full md:w-3/5 items-center justify-between`}>
+          <nav className='fixed top-5 flex flex-col w-full h-full bg-red-800 md:flex-row gap-4'>
             {
               navLinks.map((items) =>(
                 <Link
-                key={items.id}
+                  key={items.id}
                   href={items.href}
+                  className='font-[poppins]'
                 >
                   {items.label}
                 </Link>
               ))
             }
           </nav>
-          <div className='flex gap-2 m-2'>
+          <div className='hidden md:flex gap-2 m-2'>
             <Button 
               className=''
               children='Sign in'
@@ -58,7 +63,7 @@ const Navigation : React.FC = () =>{
         </div>
         <div className='md:hidden'>
           <Button
-            children={toggle ? <FiX /> : <FiMenu />}
+            children={toggle ? <FiX width={30}/> : <FiMenu />}
             onClick={handleMenu}
           />
         </div>
