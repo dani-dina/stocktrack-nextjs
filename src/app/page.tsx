@@ -10,7 +10,7 @@ export default function Home() {
         <div className='md:mx-15'>
          {/* <h1>What we offer </h1> */}
          <div className='flex items-center justify-between'>
-            {/* <ProductCard /> */}
+           
          </div>
         </div>
       </div>
