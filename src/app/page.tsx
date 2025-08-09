@@ -8,7 +8,7 @@ export default function Home() {
       <Hero />
       <div className='w-full'>
         <div className='md:mx-15'>
-         {/* <h1>What we offer </h1> */}
+         
          <div className='flex items-center justify-between'>
            
          </div>
