@@ -21,8 +21,8 @@ const Navigation : React.FC = () =>{
   }
 
   return (
-    <div className='fixed md:static top-0 left-0 w-full z-50 backdrop-blur-3xl'>
-      <div className='flex items-center justify-between px-7 md:mx-15 my-5 '>
+    <div className='fixed top-0 md:static left-0 w-full z-50 backdrop-blur-3xl'>
+      <div className='flex items-center justify-between mx-7 md:mx-15 my-5 '>
         <Link
           href={'/'}
         >
@@ -42,7 +42,7 @@ const Navigation : React.FC = () =>{
                 <Link
                   key={items.id}
                   href={items.href}
-                  className='font-[Inter] font-thin text-center my-4 bg-green-600'
+                  className='font-[Inter] font-thin text-center my-4'
                 >
                   {items.label}
                 </Link>
