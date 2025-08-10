@@ -36,7 +36,7 @@ const Navigation : React.FC = () =>{
         <nav className={
           ` ${openNavigation ? 'flex' : 'hidden'} fixed md:flex z-50 top-[5rem] left-0 right-0 bottom-0  md:static`
         }>
-          <div className='relative inset-0 z-40 flex flex-col md:flex-row  gap-3 w-full'>
+          <div className='relative inset-0 z-40 flex flex-col md:flex-row  gap-6 w-full'>
             {
               navLinks.map((items) =>(
                 <Link
@@ -62,7 +62,7 @@ const Navigation : React.FC = () =>{
           />
           <Button
             children='Log in'
-            className='py-1 px-2.5 border-1 border-gray-400 rounded-md'
+            className='py-1 px-2.5 bg-gradient-to-r from-[#FE2F92] to-[#544AA5] rounded-md'
           />
         </div>
       </div>

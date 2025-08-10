@@ -15,3 +15,11 @@ export interface ButtonProps {
   onClick?: () => void;
   children: React.ReactNode;
 }
+
+export type circleProps = {
+   className : string,
+}
+
+export type BackgroundGradientProps = {
+  className?: string;
+};
