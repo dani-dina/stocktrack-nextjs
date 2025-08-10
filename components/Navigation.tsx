@@ -13,13 +13,11 @@ const Navigation : React.FC = () =>{
   const [openNavigation,setOpenNavigation] = useState(false);
  
   const handleNavigation = () =>{
-    if(openNavigation){
-      setOpenNavigation(!openNavigation);
-      enablePageScroll();
-    }else{
-      setOpenNavigation(!openNavigation);
-      disablePageScroll();
-    }
+    setOpenNavigation(prev => {
+      const newState = !prev;
+      newState ? disablePageScroll() : enablePageScroll();
+      return newState;
+    });
   }
 
   return (
@@ -38,7 +36,7 @@ const Navigation : React.FC = () =>{
         <nav className={
           ` ${openNavigation ? 'flex' : 'hidden'} fixed md:flex z-50 top-[5rem] left-0 right-0 bottom-0  md:static`
         }>
-          <div className='relative inset-0 z-40 bg-red-500 flex flex-col md:flex-row  gap-3 w-full border-amber-500 '>
+          <div className='relative inset-0 z-40 flex flex-col md:flex-row  gap-3 w-full'>
             {
               navLinks.map((items) =>(
                 <Link
