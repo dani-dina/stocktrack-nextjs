@@ -43,3 +43,10 @@ export type FooterSection = {
   title: string;
   links: FooterLink[];
 };
+
+export type ProgressItem = {
+  id: string;
+  title?: string;
+  description?: string;
+  isLine: boolean;
+};

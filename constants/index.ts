@@ -1,8 +1,9 @@
 import { FaWarehouse, FaBarcode, FaTruckLoading, FaBell, FaChartLine, FaClipboardList } from 'react-icons/fa';
 import { Feature } from '../types';
-import { features } from 'process';
+import { features, title } from 'process';
 import { NavLink } from '../types';
 import { FooterSection } from '../types';
+import { ProgressItem } from '../types';
 
 // constants/navLinks.ts
 export const navLinks : NavLink[] = [
@@ -167,5 +168,44 @@ export const footerLinks : FooterSection[] = [
       { name: 'Location: New York, USA', href: '/location' },
       { name: 'Location: New York, USA', href: '/location' }
     ]
+  }
+];
+
+export const progress : ProgressItem[] = [
+  {
+    id : '0',
+    title : '100 M',
+    description : 'Total Supply',
+    isLine : false
+  },
+  {
+    id : '1',
+    isLine : true
+  },
+  {
+    id : '2',
+    title : '14 M',
+    description : 'Pre-ICO',
+    isLine : false
+  },
+  {
+    id : '3',
+    isLine : true
+  },
+  {
+    id : '4',
+    title : '78%',
+    description : 'Token Sale',
+    isLine : false
+  },
+  {
+    id : '5',
+    isLine : true
+  },
+  {
+    id : '6',
+    title : '89.65%',
+    description : 'Hidden Cap',
+    isLine : false
   }
 ];
