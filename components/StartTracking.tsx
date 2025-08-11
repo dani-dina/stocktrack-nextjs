@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Button from './Button';
 
 const StartTracking : React.FC = () => {
   return (
@@ -16,20 +17,24 @@ const StartTracking : React.FC = () => {
             alt="Dashboard"
             width={500}
             height={500}
-            className="h-[90vh] w-[80vw] "
+            className="h-[90vh] w-[80vw] rounded-2xl my-4"
           />
       </div>
 
       {/* Mobile image */}
-      <div className="block md:hidden">
+      <div className="w-full block md:hidden ">
         <Image
           src="/dashboard-mobile.png"
           alt="Dashboard"
-          width={400}
-          height={300}
+          width={500}
+          height={700}
           className="w-full h-auto object-cover"
         />
       </div>
+      <Button
+        children='Get Started'
+        className='text-white py-2 px-4 bg-gradient-to-r from-[#FE2F92] to-[#544AA5] rounded-md font-[poppins] my-7'
+      />
       </div>
     </section>
   );

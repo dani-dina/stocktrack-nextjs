@@ -119,3 +119,51 @@ export const featuresCard : Feature [] = [
     description: 'Control inventory across multiple warehouses.'
   }
 ];
+
+/* Footer links */
+export const footerLinks = [
+  {
+    title: 'Company',
+    links: [
+      { name: 'About Us', href: '/about' },
+      { name: 'Careers', href: '/careers' },
+      { name: 'Press', href: '/press' },
+      { name: 'Contact', href: '/contact' }
+    ]
+  },
+  {
+    title: 'Product',
+    links: [
+      { name: 'Features', href: '/features' },
+      { name: 'Pricing', href: '/pricing' },
+      { name: 'Integrations', href: '/integrations' },
+      { name: 'API', href: '/api' }
+    ]
+  },
+  {
+    title: 'Resources',
+    links: [
+      { name: 'Blog', href: '/blog' },
+      { name: 'Help Center', href: '/help' },
+      { name: 'Guides', href: '/guides' },
+      { name: 'Developers', href: '/developers' }
+    ]
+  },
+  {
+    title: 'Legal',
+    links: [
+      { name: 'Privacy Policy', href: '/privacy' },
+      { name: 'Terms of Service', href: '/terms' },
+      { name: 'Security', href: '/security' },
+      { name: 'Compliance', href: '/compliance' }
+    ]
+  },
+  {
+    title: 'Contact',
+    links: [
+      { name: 'Email: support@ims.com', href: 'mailto:support@ims.com' },
+      { name: 'Phone: +1 (555) 123-4567', href: 'tel:+15551234567' },
+      { name: 'Location: New York, USA', href: '/location' }
+    ]
+  }
+];
