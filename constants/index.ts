@@ -2,6 +2,7 @@ import { FaWarehouse, FaBarcode, FaTruckLoading, FaBell, FaChartLine, FaClipboar
 import { Feature } from '../types';
 import { features } from 'process';
 import { NavLink } from '../types';
+import { FooterSection } from '../types';
 
 // constants/navLinks.ts
 export const navLinks : NavLink[] = [
@@ -121,7 +122,7 @@ export const featuresCard : Feature [] = [
 ];
 
 /* Footer links */
-export const footerLinks = [
+export const footerLinks : FooterSection[] = [
   {
     title: 'Company',
     links: [
@@ -163,6 +164,7 @@ export const footerLinks = [
     links: [
       { name: 'Email: support@ims.com', href: 'mailto:support@ims.com' },
       { name: 'Phone: +1 (555) 123-4567', href: 'tel:+15551234567' },
+      { name: 'Location: New York, USA', href: '/location' },
       { name: 'Location: New York, USA', href: '/location' }
     ]
   }
