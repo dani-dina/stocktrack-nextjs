@@ -171,7 +171,7 @@ export const footerLinks : FooterSection[] = [
   }
 ];
 
-export const progress : ProgressItem[] = [
+export const progressItem : ProgressItem[] = [
   {
     id : '0',
     title : '100 M',
