@@ -1,3 +1,5 @@
+import { IconType } from "react-icons";
+
 export type NavLink = {
   id : string,
   label: string;
@@ -22,4 +24,11 @@ export type circleProps = {
 
 export type BackgroundGradientProps = {
   className?: string;
+};
+
+export type Feature = {
+  id: string;
+  icon: IconType;
+  title: string;
+  description: string;
 };
