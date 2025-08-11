@@ -32,3 +32,14 @@ export type Feature = {
   title: string;
   description: string;
 };
+
+/** Footer **/
+export type FooterLink = {
+  name: string;
+  href: string;
+};
+
+export type FooterSection = {
+  title: string;
+  links: FooterLink[];
+};
