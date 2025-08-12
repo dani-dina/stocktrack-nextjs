@@ -24,8 +24,27 @@ const OurProgress : React.FC = () => {
               }
             </div>
           </div>
-          <div className='px-4 mx-5'>
-            <h1 className='text-3xl font-semibold'>Pre Sales Bonuess</h1>
+          <div className='px-4 mx-5 pb-5'>
+            <div>
+              <div>
+                <p>Progress 1</p>
+                <div className='px-3 py-1  rounded-2xl border border-gray-600'>
+                  <div className='rounded-2xl px-4 py-1 bg-red-500 w-3/5'>
+
+                  </div>
+                </div>
+              </div>
+
+                <div className='my-3'>
+                <p>Progress 1</p>
+                <div className='px-3 py-1  rounded-2xl border border-gray-600'>
+                  <div className='rounded-2xl px-4 py-1 bg-green-500 w-4/5'>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h1 className='text-3xl font-semibold pt-9'>Pre Sales Bonuess</h1>
             <p className='text-white/60 py-5'>
               Here’s a JavaScript array with computer science <br /> Here’s a JavaScript array with computer science with js
             </p>
