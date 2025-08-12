@@ -50,3 +50,24 @@ export type ProgressItem = {
   description?: string;
   isLine: boolean;
 };
+
+export type pricingProp = {
+  key : string;
+  children : string;
+  btnTitle : string;
+  annualPrice : string;
+  monthlyPrice : string;
+  packages : string[];
+  description : string;
+
+}
+
+export type PricingPlan = {
+  id: string;
+  children : string;
+  btnTitle : string;
+  annualPrice: string;
+  yearlyPrice: string;
+  packages: string[];
+  description : string;
+};

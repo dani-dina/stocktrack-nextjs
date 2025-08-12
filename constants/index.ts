@@ -4,6 +4,7 @@ import { features, title } from 'process';
 import { NavLink } from '../types';
 import { FooterSection } from '../types';
 import { ProgressItem } from '../types';
+import { PricingPlan } from '../types';
 
 // constants/navLinks.ts
 export const navLinks : NavLink[] = [
@@ -207,5 +208,56 @@ export const progressItem : ProgressItem[] = [
     title : '89.65%',
     description : 'Hidden Cap',
     isLine : false
+  }
+];
+
+/* pricing plans */
+export const pricingPlans : PricingPlan [] = [
+  {
+    id: '0',
+    children: 'Starter Plan',
+    btnTitle : 'Get Started',
+    annualPrice: '$25',
+    yearlyPrice: '$256',
+    description: 'Perfect for small businesses just starting with inventory tracking.',
+    packages: [
+      'Basic inventory tracking',
+      'Up to 500 products',
+      'Single user access',
+      'Email support',
+      'Basic analytics dashboard'
+    ]
+  },
+  {
+    id: '1',
+    children: 'Professional Plan',
+    btnTitle : 'Upgrade Now',
+    annualPrice: '$49',
+    yearlyPrice: '$499',
+    description: 'Ideal for growing businesses needing advanced features.',
+    packages: [
+      'Advanced inventory tracking',
+      'Up to 5,000 products',
+      'Multi-user access',
+      'Priority email & chat support',
+      'Real-time stock alerts',
+      'Advanced analytics & reporting'
+    ]
+  },
+  {
+    id: '2',
+    children: 'Enterprise Plan',
+    btnTitle : 'Upgrade Now',
+    annualPrice: '$99',
+    yearlyPrice: '$999',
+    description: 'Complete solution for large enterprises with complex inventory needs.',
+    packages: [
+      'Unlimited products',
+      'Unlimited users',
+      '24/7 premium support',
+      'AI-powered demand forecasting',
+      'Custom API integrations',
+      'Dedicated account manager'
+    ]
   }
 ];
