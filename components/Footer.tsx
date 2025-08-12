@@ -8,12 +8,13 @@ const Footer : React.FC = () => {
     >
       <div className='mx-7 py-10 md:mx-15 flex flex-col md:flex-row items-center justify-between'>
         {
-          footerLinks.map((items) => (
-            <ul className='mt-4'>
+          footerLinks.map((items,key) => (
+            <ul className='mt-4' key={key}>
               <span className='block pb-7 font-semibold'>{items.title}</span>
               {
-                items.links.map((item) => (
+                items.links.map((item,key) => (
                   <Link
+                    key={key}
                     href={item.href}
                     className='block my-1.5 text-white/70'
                   >

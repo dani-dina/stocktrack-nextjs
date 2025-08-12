@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from './Button';
@@ -10,8 +11,11 @@ import { useState } from 'react';
 import { disablePageScroll, enablePageScroll } from "scroll-lock";
 
 const Navigation : React.FC = () =>{
+  const router = useRouter();
   const [openNavigation,setOpenNavigation] = useState(false);
- 
+  
+  const currentPath = window.location.pathname;
+
   const handleNavigation = () =>{
     setOpenNavigation(prev => {
       const newState = !prev;
@@ -19,9 +23,9 @@ const Navigation : React.FC = () =>{
       return newState;
     });
   }
-
+  console.log(currentPath);
   return (
-    <div className='fixed top-0 md:static left-0 w-full z-50 backdrop-blur-3xl'>
+    <div className={`${currentPath === '/dashboard' ? 'hidden bg-amber-500' : 'block'}fixed top-0 md:static left-0 w-full z-50 backdrop-blur-3xl`}>
       <div className='flex items-center justify-between mx-7 md:mx-15 my-5 '>
         <Link
           href={'/'}

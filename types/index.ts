@@ -55,8 +55,7 @@ export type pricingProp = {
   key : string;
   children : string;
   btnTitle : string;
-  annualPrice : string;
-  monthlyPrice : string;
+  price : string;
   packages : string[];
   description : string;
 

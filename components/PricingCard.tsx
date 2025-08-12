@@ -2,7 +2,7 @@ import Button from './Button';
 import { pricingProp } from '../types';
 import { FaCheckCircle } from "react-icons/fa";
 
-const PricingCard : React.FC<pricingProp> = ({children,btnTitle,monthlyPrice,annualPrice,packages,description}) => {
+const PricingCard : React.FC<pricingProp> = ({children,btnTitle,price,packages,description}) => {
 
   return (
     <div className='w-80 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl my-5'>
@@ -10,7 +10,7 @@ const PricingCard : React.FC<pricingProp> = ({children,btnTitle,monthlyPrice,ann
         <h1 className='py-4'>
           {children}
         </h1>
-        <h1 className='text-4xl font-bold'>{annualPrice}/ <span className='text-sm font-normal text-[#FE2F92]'>Month</span> </h1> 
+        <h1 className='text-4xl font-bold'>{price}/ <span className='text-sm font-normal text-[#FE2F92]'>Month</span> </h1> 
         <p className='my-4'>
           {description}
         </p>

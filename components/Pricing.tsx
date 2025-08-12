@@ -42,10 +42,9 @@ const Pricing : React.FC = () => {
             pricingPlans.map((items) => (
               <PricingCard
                 key={items.id}
-                children={items.title}
+                children={items.children}
                 btnTitle={items.btnTitle}
-                annualPrice={items.annualPrice}
-                monthlyPrice={items.yearlyPrice}
+                price={planType === 'annual' ? items.yearlyPrice : items.annualPrice }
                 packages={items.packages}
                 description={items.description}
               />
