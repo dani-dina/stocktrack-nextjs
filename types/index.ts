@@ -70,3 +70,9 @@ export type PricingPlan = {
   packages: string[];
   description : string;
 };
+
+export type GrowingStep = {
+  id: string;
+  number: string;
+  message: string;
+};

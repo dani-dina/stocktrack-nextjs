@@ -5,6 +5,7 @@ import StartTracking from '../../components/StartTracking';
 import Footer from '../../components/Footer';
 import OurProgress from '../../components/OurProgress';
 import Pricing from '../../components/Pricing';
+import GrowingSteps from '../../components/GrowingSteps';
 import Partners from '../../components/Partners';
 import Testimonials from '../../components/Testimonials';
 
@@ -16,6 +17,7 @@ export default function Home() {
       <StartTracking />
       <OurProgress />
       <Pricing />
+      <GrowingSteps />
       <Testimonials />
       <Partners />
       <Footer />

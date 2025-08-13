@@ -1,5 +1,5 @@
 import { FaWarehouse, FaBarcode, FaTruckLoading, FaBell, FaChartLine, FaClipboardList } from 'react-icons/fa';
-import { Feature } from '../types';
+import { Feature, GrowingStep } from '../types';
 import { features, title } from 'process';
 import { NavLink } from '../types';
 import { FooterSection } from '../types';
@@ -261,3 +261,22 @@ export const pricingPlans : PricingPlan [] = [
     ]
   }
 ];
+
+/* Growing steps */
+export const growingSteps : GrowingStep[] = [
+  {
+    id : '0',
+    number : '01',
+    message : 'Some growing message here is theere or get back to the hell or fuck off'
+  },
+    {
+    id : '1',
+    number : '02',
+    message : 'Some growing message here is theere or get back to the hell or fuck off'
+  },
+    {
+    id : '2',
+    number : '03',
+    message : 'Some growing message here is theere or get back to the hell or fuck off'
+  },
+]
