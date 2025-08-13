@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const TestimonialCard : React.FC = () => {
   return (
-    <div className='w-80 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl'>
+    <div className='w-80 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl mb-7'>
       <div className='p-7'>
         <div className='py-5'>
           <FaQuoteLeft size={50} className="text-gray-500" />

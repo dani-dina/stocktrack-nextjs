@@ -10,7 +10,7 @@ const Partners : React.FC = () => {
         <h1 className='text-5xl font-semibold text-center py-5'>
           Our Partners
         </h1>
-        <div className='flex items-center justify-between my-7 py-5'>
+        <div className='flex flex-col md:flex-row items-center justify-between my-7 py-5'>
           {
             images.map((items,key) =>(
               <Image
@@ -25,9 +25,9 @@ const Partners : React.FC = () => {
         </div>
         <div className='flex items-center justify-center py-15'>
           <div className='px-10 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl flex items-center justify-center'>
-            <div className='flex items-center justify-around gap-17'>
-              <div className='px-15 py-7'>
-                <h1 className='text-2xl font-semibold py-7'>Let's Try Our Service Now !</h1>
+            <div className='flex flex-col md:flex-row items-center justify-around gap-17'>
+              <div className=' md:px-15 py-7 '>
+                <h1 className='text-2xl font-semibold py-7 '>Let's Try Our Service Now !</h1>
                 <p className='text-white/60'>
                   Everything you need to accept card payments <br /> and grow yout business anywhere on the planet
                 </p>

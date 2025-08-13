@@ -4,8 +4,8 @@ const Testimonials : React.FC = () => {
   return (
     <section className='py-10 mt-8'>
       <div className='mx-7 md:mx-15'>
-        <div className='flex items-center justify-between'>
-          <h1 className='text-5xl font-bold'>
+        <div className='flex flex-col md-flex-row items-center justify-between'>
+          <h1 className='text-5xl font-bold py-4'>
             What People are <br /> saying about us
           </h1>
           <p className='text-white/60'>

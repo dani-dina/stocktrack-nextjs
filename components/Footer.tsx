@@ -6,7 +6,7 @@ const Footer : React.FC = () => {
     <section
       className='w-full bg-[#0D0F42]'
     >
-      <div className='mx-7 py-10 md:mx-15 flex flex-col md:flex-row items-center justify-between'>
+      <div className='mx-7 py-10 md:mx-15 flex flex-col md:flex-row items-start md:items-center justify-between'>
         {
           footerLinks.map((items,key) => (
             <ul className='mt-4' key={key}>
