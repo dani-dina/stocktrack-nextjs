@@ -5,6 +5,8 @@ import StartTracking from '../../components/StartTracking';
 import Footer from '../../components/Footer';
 import OurProgress from '../../components/OurProgress';
 import Pricing from '../../components/Pricing';
+import Partners from '../../components/Partners';
+import Testimonials from '../../components/Testimonials';
 
 export default function Home() {
   return (
@@ -14,6 +16,8 @@ export default function Home() {
       <StartTracking />
       <OurProgress />
       <Pricing />
+      <Testimonials />
+      <Partners />
       <Footer />
     </div>
   );

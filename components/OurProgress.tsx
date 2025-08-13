@@ -24,7 +24,7 @@ const OurProgress : React.FC = () => {
               }
             </div>
           </div>
-          <div className='px-4 mx-5 pb-5'>
+          <div className='px-4 mx-5 pb-7'>
             <div>
               <div>
                 <p>Progress 1</p>
@@ -36,7 +36,7 @@ const OurProgress : React.FC = () => {
               </div>
 
                 <div className='my-3'>
-                <p>Progress 1</p>
+                <p>Progress 2</p>
                 <div className='px-3 py-1  rounded-2xl border border-gray-600'>
                   <div className='rounded-2xl px-4 py-1 bg-green-500 w-4/5'>
 
