@@ -3,7 +3,7 @@ import { progressItem } from '../constants';
 const OurProgress : React.FC = () => {
 
   return (
-    <section className='w-full py-15 my-7'>
+    <section className='w-full py-15 my-7  '>
       <div className='mx-7 md:mx-15 '>
         <h1 className='font-semibold text-4xl'>There is Some Title Here</h1>
         <div className='flex flex-col-reverse md:flex-row gap-x-5 mt-7'>

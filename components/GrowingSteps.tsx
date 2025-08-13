@@ -2,7 +2,7 @@ import { growingSteps } from "../constants";
 
 const GrowingSteps : React.FC = () => {
   return (
-    <section className='w-w-full my-7 py-5 '>
+    <section className='w-w-full my-7 py-7 bg-white/10 backdrop-blur-md'>
       <h1 className='mx-7 md:mx-15 text-5xl font-bold my-7'>Grow Our <br /> Business Now</h1>
       <div className='w-full flex items-center justify-center my-8 pt-15'>
         <div className='w-4/5 mx-7 md:mx-15 flex items-start justify-between gap-7'>
