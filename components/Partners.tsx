@@ -7,7 +7,7 @@ const Partners : React.FC = () => {
   return (
     <section className='w-full py-4'>
       <div className='mx-7 md:mx-15'>
-        <h1 className='text-5xl font-semibold'>
+        <h1 className='text-5xl font-semibold text-center py-5'>
           Our Partners
         </h1>
         <div className='flex items-center justify-between my-7 py-5'>
