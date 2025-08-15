@@ -14,4 +14,6 @@ model User {
   email String @unique
   lastName String
   UserName String @unique
+  role String
+  
 }
