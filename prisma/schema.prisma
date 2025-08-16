@@ -1,0 +1,715 @@
+// -------------------------------------------------------------
+// Prisma schema — Inventory Management (MongoDB)
+// - Provider: MongoDB
+// - Multi-tenant (Organization + orgId on records)
+// - NextAuth-compatible models (Mongo-safe)
+// - RBAC, warehouses/locations, products, lots/serials
+// - Orders, invoices, payments, audit logs
+// - Decimal -> Decimal128
+// - Avoids Mongo-unsafe unique constraints on nullable fields
+//   (enforce some uniqueness in app layer)
+// -------------------------------------------------------------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// -------------------- Enums --------------------
+enum Role {
+  OWNER
+  ADMIN
+  MANAGER
+  STAFF
+  VIEWER
+}
+
+enum Permission {
+  PRODUCT_READ
+  PRODUCT_WRITE
+  INVENTORY_READ
+  INVENTORY_WRITE
+  ORDER_READ
+  ORDER_WRITE
+  FINANCE_READ
+  FINANCE_WRITE
+  USER_MANAGE
+}
+
+enum OrderStatus {
+  DRAFT
+  CONFIRMED
+  PARTIALLY_FULFILLED
+  FULFILLED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PARTIAL
+  PAID
+  REFUNDED
+  VOID
+}
+
+enum MovementType {
+  RECEIPT
+  ISSUE
+  TRANSFER
+  ADJUSTMENT_POS
+  ADJUSTMENT_NEG
+  RETURN_IN
+  RETURN_OUT
+}
+
+enum MovementSource {
+  PURCHASE
+  SALES
+  TRANSFER
+  ADJUSTMENT
+  MANUAL
+}
+
+enum TaxType {
+  EXCLUSIVE
+  INCLUSIVE
+  NONE
+}
+
+enum CurrencyCode {
+  USD
+  EUR
+  GBP
+  ETB
+  AED
+  SAR
+  CNY
+}
+
+enum UOMType {
+  BASE
+  ALT
+}
+
+// -------------------- Multi-tenancy --------------------
+model Organization {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String   @unique
+  currency    CurrencyCode @default(ETB)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // relations (logical)
+  users       UserOrganization[]
+  warehouses  Warehouse[]
+  products    Product[]
+  customers   Customer[]
+  suppliers   Supplier[]
+  priceLists  PriceList[]
+  taxes       Tax[]
+  apiTokens   ApiToken[]
+  auditLogs   AuditLog[]
+
+  @@index([name])
+}
+
+model UserOrganization {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String   @db.ObjectId
+  organizationId  String   @db.ObjectId
+  role            Role     @default(VIEWER)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User?        @relation(fields: [userId], references: [id])
+  organization    Organization? @relation(fields: [organizationId], references: [id])
+
+  @@unique([userId, organizationId])
+  @@index([organizationId, role])
+}
+
+// -------------------- Auth (NextAuth) --------------------
+model User {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+  metadata       Json?
+
+  accounts       Account[]
+  sessions       Session[]
+  memberships    UserOrganization[]
+  auditLogs      AuditLog[]
+
+  @@index([deletedAt])
+}
+
+model Account {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String  @db.ObjectId
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+
+  user               User?   @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+
+  user         User?    @relation(fields: [userId], references: [id])
+}
+
+model VerificationToken {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier  String
+  token       String   @unique
+  expires     DateTime
+
+  @@unique([identifier, token])
+}
+
+// -------------------- RBAC --------------------
+model RolePermission {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  role           Role
+  permission     Permission
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+
+  @@unique([organizationId, role, permission])
+  @@index([organizationId, role])
+}
+
+// -------------------- Catalog --------------------
+model Category {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  name           String
+  parentId       String?  @db.ObjectId
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime?
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  parent         Category?      @relation("CategoryToCategory", fields: [parentId], references: [id])
+  children       Category[]     @relation("CategoryToCategory")
+
+  products       Product[]
+
+  @@unique([organizationId, name])
+  @@index([organizationId, parentId])
+}
+
+model UnitOfMeasure {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  code           String
+  name           String
+  type           UOMType  @default(BASE)
+  toBaseFactor   Decimal? @db.Decimal128
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+
+  @@unique([organizationId, code])
+  @@index([organizationId])
+}
+
+model Product {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String       @db.ObjectId
+  sku            String
+  name           String
+  description    String?
+  categoryId     String?      @db.ObjectId
+  baseUomId      String       @db.ObjectId
+  uomGroupId     String?
+  barcode        String?
+  isSerialized   Boolean      @default(false)
+  isLotTracked   Boolean      @default(false)
+  isActive       Boolean      @default(true)
+  cost           Decimal      @db.Decimal128 @default(0)
+  price          Decimal      @db.Decimal128 @default(0)
+  currency       CurrencyCode @default(ETB)
+  minStock       Decimal?     @db.Decimal128
+  maxStock       Decimal?     @db.Decimal128
+  metadata       Json?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  deletedAt      DateTime?
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  category       Category?      @relation(fields: [categoryId], references: [id])
+  baseUom        UnitOfMeasure? @relation(fields: [baseUomId], references: [id])
+
+  prices         PriceListItem[]
+  inventories    Inventory[]
+  lots           Lot[]
+  serials        SerialNumber[]
+  purchaseLines  PurchaseOrderLine[]
+  salesLines     SalesOrderLine[]
+
+  @@unique([organizationId, sku])
+  @@index([organizationId, name])
+  @@index([deletedAt])
+}
+
+// -------------------- Warehousing & Stock --------------------
+model Warehouse {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  code           String
+  name           String
+  address        String?
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime?
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  locations      Location[]
+  inventories    Inventory[]
+
+  // movement relations are logical only (no FKs in Mongo)
+  stockMovesFrom StockMovement[] @relation("MoveFromWarehouse")
+  stockMovesTo   StockMovement[] @relation("MoveToWarehouse")
+
+  @@unique([organizationId, code])
+  @@index([organizationId])
+}
+
+model Location {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  warehouseId  String   @db.ObjectId
+  code         String
+  name         String
+  isDefault    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  warehouse    Warehouse? @relation(fields: [warehouseId], references: [id])
+
+  @@unique([warehouseId, code])
+  @@index([warehouseId])
+}
+
+model Lot {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  productId      String   @db.ObjectId
+  lotCode        String
+  manufactureAt  DateTime?
+  expireAt       DateTime?
+  metadata       Json?
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  product        Product?      @relation(fields: [productId], references: [id])
+  inventories    Inventory[]
+
+  @@unique([organizationId, productId, lotCode])
+  @@index([expireAt])
+}
+
+model SerialNumber {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId     String   @db.ObjectId
+  productId          String   @db.ObjectId
+  serial             String
+  status             String   @default("IN_STOCK")
+  currentWarehouseId String?  @db.ObjectId
+  currentLocationId  String?  @db.ObjectId
+
+  organization       Organization? @relation(fields: [organizationId], references: [id])
+  product            Product?      @relation(fields: [productId], references: [id])
+  currentWarehouse   Warehouse?    @relation(fields: [currentWarehouseId], references: [id])
+  currentLocation    Location?     @relation(fields: [currentLocationId], references: [id])
+
+  @@unique([organizationId, productId, serial])
+  @@index([currentWarehouseId, currentLocationId])
+}
+
+model Inventory {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  productId      String   @db.ObjectId
+  warehouseId    String   @db.ObjectId
+  locationId     String?  @db.ObjectId
+  lotId          String?  @db.ObjectId
+  quantity       Decimal  @db.Decimal128 @default(0)
+  reserved       Decimal  @db.Decimal128 @default(0)
+  updatedAt      DateTime @updatedAt
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  product        Product?      @relation(fields: [productId], references: [id])
+  warehouse      Warehouse?    @relation(fields: [warehouseId], references: [id])
+  location       Location?     @relation(fields: [locationId], references: [id])
+  lot            Lot?          @relation(fields: [lotId], references: [id])
+
+  // ⚠️ No unique here because some fields are nullable and Mongo unique with null is tricky.
+  @@index([organizationId, productId, warehouseId, locationId, lotId])
+  @@index([productId, warehouseId])
+}
+
+model StockMovement {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId   String   @db.ObjectId
+  productId        String   @db.ObjectId
+  movementType     MovementType
+  source           MovementSource
+  qty              Decimal  @db.Decimal128
+  uomId            String   @db.ObjectId
+  fromWarehouseId  String?  @db.ObjectId
+  fromLocationId   String?  @db.ObjectId
+  toWarehouseId    String?  @db.ObjectId
+  toLocationId     String?  @db.ObjectId
+  lotId            String?  @db.ObjectId
+  serialId         String?  @db.ObjectId
+  note             String?
+  createdAt        DateTime @default(now())
+  createdById      String?  @db.ObjectId
+  purchaseLineId   String?  @db.ObjectId
+  salesLineId      String?  @db.ObjectId
+
+  organization     Organization? @relation(fields: [organizationId], references: [id])
+  product          Product?      @relation(fields: [productId], references: [id])
+  uom              UnitOfMeasure? @relation(fields: [uomId], references: [id])
+  fromWarehouse    Warehouse?    @relation("MoveFromWarehouse", fields: [fromWarehouseId], references: [id])
+  toWarehouse      Warehouse?    @relation("MoveToWarehouse", fields: [toWarehouseId], references: [id])
+  fromLocation     Location?     @relation("MoveFromLocation", fields: [fromLocationId], references: [id])
+  toLocation       Location?     @relation("MoveToLocation", fields: [toLocationId], references: [id])
+  lot              Lot?          @relation(fields: [lotId], references: [id])
+  serial           SerialNumber? @relation(fields: [serialId], references: [id])
+  createdBy        User?         @relation(fields: [createdById], references: [id])
+  purchaseLine     PurchaseOrderLine? @relation(fields: [purchaseLineId], references: [id])
+  salesLine        SalesOrderLine?    @relation(fields: [salesLineId], references: [id])
+
+  @@index([organizationId, productId, createdAt])
+  @@index([fromWarehouseId, toWarehouseId])
+}
+
+// -------------------- Business partners --------------------
+model Supplier {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  code           String
+  name           String
+  email          String?
+  phone          String?
+  taxNumber      String?
+  address        String?
+  isActive       Boolean  @default(true)
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime?
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  purchases      PurchaseOrder[]
+  invoices       SupplierInvoice[]
+
+  @@unique([organizationId, code])
+  @@index([organizationId, name])
+}
+
+model Customer {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  code           String
+  name           String
+  email          String?
+  phone          String?
+  taxNumber      String?
+  address        String?
+  isActive       Boolean  @default(true)
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime?
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  salesOrders    SalesOrder[]
+  invoices       CustomerInvoice[]
+
+  @@unique([organizationId, code])
+  @@index([organizationId, name])
+}
+
+// -------------------- Pricing & Tax --------------------
+model PriceList {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String       @db.ObjectId
+  name           String
+  currency       CurrencyCode
+  isDefault      Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  items          PriceListItem[]
+
+  @@unique([organizationId, name])
+  @@index([organizationId, isDefault])
+}
+
+model PriceListItem {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  priceListId    String   @db.ObjectId
+  productId      String   @db.ObjectId
+  price          Decimal  @db.Decimal128
+  minQty         Decimal? @db.Decimal128
+
+  priceList      PriceList? @relation(fields: [priceListId], references: [id])
+  product        Product?   @relation(fields: [productId], references: [id])
+
+  // cannot use unique on nullable minQty safely; index for speed
+  @@index([priceListId, productId, minQty])
+  @@index([productId])
+}
+
+model Tax {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  name           String
+  rate           Decimal  @db.Decimal128 // e.g. 0.15 for 15%
+  type           TaxType  @default(EXCLUSIVE)
+  isActive       Boolean  @default(true)
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+
+  @@unique([organizationId, name])
+}
+
+// -------------------- Purchasing --------------------
+model PurchaseOrder {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String      @db.ObjectId
+  supplierId     String      @db.ObjectId
+  code           String
+  status         OrderStatus @default(DRAFT)
+  currency       CurrencyCode
+  orderDate      DateTime    @default(now())
+  expectedDate   DateTime?
+  note           String?
+  subtotal       Decimal     @db.Decimal128 @default(0)
+  taxTotal       Decimal     @db.Decimal128 @default(0)
+  grandTotal     Decimal     @db.Decimal128 @default(0)
+  createdById    String?     @db.ObjectId
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  deletedAt      DateTime?
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  supplier       Supplier?     @relation(fields: [supplierId], references: [id])
+  createdBy      User?         @relation(fields: [createdById], references: [id])
+
+  lines          PurchaseOrderLine[]
+  goodsReceipts  StockMovement[] @relation("PurchaseReceipts")
+  invoices       SupplierInvoice[]
+
+  @@unique([organizationId, code])
+  @@index([organizationId, supplierId, status])
+}
+
+model PurchaseOrderLine {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  purchaseOrderId String   @db.ObjectId
+  productId       String   @db.ObjectId
+  description     String?
+  qtyOrdered      Decimal  @db.Decimal128
+  qtyReceived     Decimal  @db.Decimal128 @default(0)
+  uomId           String   @db.ObjectId
+  unitPrice       Decimal  @db.Decimal128
+  taxId           String?  @db.ObjectId
+  lineTotal       Decimal  @db.Decimal128 @default(0)
+
+  purchaseOrder   PurchaseOrder? @relation(fields: [purchaseOrderId], references: [id])
+  product         Product?       @relation(fields: [productId], references: [id])
+  uom             UnitOfMeasure? @relation(fields: [uomId], references: [id])
+  tax             Tax?           @relation(fields: [taxId], references: [id])
+
+  stockMoves      StockMovement[]
+
+  @@index([purchaseOrderId])
+}
+
+model SupplierInvoice {
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId  String        @db.ObjectId
+  supplierId      String        @db.ObjectId
+  purchaseOrderId String?       @db.ObjectId
+  code            String
+  issueDate       DateTime      @default(now())
+  dueDate         DateTime?
+  currency        CurrencyCode
+  subtotal        Decimal       @db.Decimal128 @default(0)
+  taxTotal        Decimal       @db.Decimal128 @default(0)
+  grandTotal      Decimal       @db.Decimal128 @default(0)
+  status          PaymentStatus @default(UNPAID)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  organization    Organization?  @relation(fields: [organizationId], references: [id])
+  supplier        Supplier?      @relation(fields: [supplierId], references: [id])
+  purchaseOrder   PurchaseOrder? @relation(fields: [purchaseOrderId], references: [id])
+  payments        Payment[]
+
+  @@unique([organizationId, code])
+  @@index([supplierId, status])
+}
+
+// -------------------- Sales --------------------
+model SalesOrder {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String      @db.ObjectId
+  customerId     String      @db.ObjectId
+  code           String
+  status         OrderStatus @default(DRAFT)
+  currency       CurrencyCode
+  orderDate      DateTime    @default(now())
+  shipBy         DateTime?
+  note           String?
+  subtotal       Decimal     @db.Decimal128 @default(0)
+  taxTotal       Decimal     @db.Decimal128 @default(0)
+  grandTotal     Decimal     @db.Decimal128 @default(0)
+  createdById    String?     @db.ObjectId
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  deletedAt      DateTime?
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  customer       Customer?     @relation(fields: [customerId], references: [id])
+  createdBy      User?         @relation(fields: [createdById], references: [id])
+
+  lines          SalesOrderLine[]
+  shipments      StockMovement[] @relation("SalesShipments")
+  invoices       CustomerInvoice[]
+
+  @@unique([organizationId, code])
+  @@index([organizationId, customerId, status])
+}
+
+model SalesOrderLine {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  salesOrderId   String   @db.ObjectId
+  productId      String   @db.ObjectId
+  description    String?
+  qtyOrdered     Decimal  @db.Decimal128
+  qtyShipped     Decimal  @db.Decimal128 @default(0)
+  uomId          String   @db.ObjectId
+  unitPrice      Decimal  @db.Decimal128
+  taxId          String?  @db.ObjectId
+  lineTotal      Decimal  @db.Decimal128 @default(0)
+
+  salesOrder     SalesOrder?    @relation(fields: [salesOrderId], references: [id])
+  product        Product?       @relation(fields: [productId], references: [id])
+  uom            UnitOfMeasure? @relation(fields: [uomId], references: [id])
+  tax            Tax?           @relation(fields: [taxId], references: [id])
+
+  stockMoves     StockMovement[]
+
+  @@index([salesOrderId])
+}
+
+model CustomerInvoice {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String        @db.ObjectId
+  customerId     String        @db.ObjectId
+  salesOrderId   String?       @db.ObjectId
+  code           String
+  issueDate      DateTime      @default(now())
+  dueDate        DateTime?
+  currency       CurrencyCode
+  subtotal       Decimal       @db.Decimal128 @default(0)
+  taxTotal       Decimal       @db.Decimal128 @default(0)
+  grandTotal     Decimal       @db.Decimal128 @default(0)
+  status         PaymentStatus @default(UNPAID)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  customer       Customer?     @relation(fields: [customerId], references: [id])
+  salesOrder     SalesOrder?   @relation(fields: [salesOrderId], references: [id])
+  payments       Payment[]
+
+  @@unique([organizationId, code])
+  @@index([customerId, status])
+}
+
+// -------------------- Payments --------------------
+model Payment {
+  id                String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId    String       @db.ObjectId
+  code              String
+  method            String
+  amount            Decimal      @db.Decimal128
+  currency          CurrencyCode
+  receivedAt        DateTime     @default(now())
+  note              String?
+  customerInvoiceId String?      @db.ObjectId
+  supplierInvoiceId String?      @db.ObjectId
+
+  organization      Organization?   @relation(fields: [organizationId], references: [id])
+  customerInvoice   CustomerInvoice? @relation(fields: [customerInvoiceId], references: [id])
+  supplierInvoice   SupplierInvoice? @relation(fields: [supplierInvoiceId], references: [id])
+
+  @@unique([organizationId, code])
+  @@index([customerInvoiceId, supplierInvoiceId])
+}
+
+// -------------------- API tokens --------------------
+model ApiToken {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  name           String
+  tokenHash      String
+  scopes         String[]
+  createdAt      DateTime @default(now())
+  lastUsedAt     DateTime?
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+
+  @@unique([organizationId, name])
+}
+
+// -------------------- Auditing --------------------
+model AuditLog {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  actorId        String?  @db.ObjectId
+  entity         String
+  entityId       String   // PK value as string/ObjectId
+  action         String
+  before         Json?
+  after          Json?
+  ip             String?
+  userAgent      String?
+  createdAt      DateTime @default(now())
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  actor          User?         @relation(fields: [actorId], references: [id])
+
+  @@index([organizationId, entity, entityId, createdAt])
+}

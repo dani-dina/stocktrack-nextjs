@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^6.14.0",
     "@types/scroll-lock": "^2.1.3",
     "next": "15.4.5",
     "next-auth": "^4.24.11",
