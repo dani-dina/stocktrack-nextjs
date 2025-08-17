@@ -1,4 +1,4 @@
-// -------------------------------------------------------------
+// ------------------------------------------------------------
 // Prisma schema — Inventory Management (MongoDB)
 // - Provider: MongoDB
 // - Multi-tenant (Organization + orgId on records)
@@ -193,16 +193,18 @@ model VerificationToken {
 
 // -------------------- RBAC --------------------
 model RolePermission {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  organizationId String   @db.ObjectId
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String        @db.ObjectId
   role           Role
   permission     Permission
 
-  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organization   Organization  @relation(fields: [organizationId], references: [id])
 
   @@unique([organizationId, role, permission])
   @@index([organizationId, role])
 }
+
+
 
 // -------------------- Catalog --------------------
 model Category {
