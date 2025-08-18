@@ -412,7 +412,7 @@ model StockMovement {
   @@index([fromWarehouseId, toWarehouseId])
 }
 
-// -------------------- Business partners --------------------
+// -------------------- Business partners ------------------
 model Supplier {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   organizationId String   @db.ObjectId
