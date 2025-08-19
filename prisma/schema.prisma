@@ -504,7 +504,7 @@ model Tax {
   @@unique([organizationId, name])
 }
 
-// -------------------- Purchasing -----------------
+// ------------------  Purchasing -----------------
 model PurchaseOrder {
   id             String      @id @default(auto()) @map("_id") @db.ObjectId
   organizationId String      @db.ObjectId
