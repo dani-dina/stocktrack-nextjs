@@ -681,15 +681,15 @@ model Payment {
   @@index([customerInvoiceId, supplierInvoiceId])
 }
 
-// -------------------- API tokens --------------------
-// model ApiToken {
-//   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-//   organizationId String   @db.ObjectId
-//   name           String
-//   tokenHash      String
-//   scopes         String[]
-//   createdAt      DateTime @default(now())
-//   lastUsedAt     DateTime?
+//-------------------- API tokens --------------------
+model ApiToken {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  name           String
+  tokenHash      String
+  scopes         String[]
+  createdAt      DateTime @default(now())
+  lastUsedAt     DateTime?
 
   organization   Organization? @relation(fields: [organizationId], references: [id])
 
