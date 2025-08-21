@@ -691,27 +691,27 @@ model Payment {
 //   createdAt      DateTime @default(now())
 //   lastUsedAt     DateTime?
 
-//   organization   Organization? @relation(fields: [organizationId], references: [id])
+  organization   Organization? @relation(fields: [organizationId], references: [id])
 
-//   @@unique([organizationId, name])
-// }
+  @@unique([organizationId, name])
+}
 
-// // -------------------- Auditing --------------------
-// model AuditLog {
-//   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-//   organizationId String   @db.ObjectId
-//   actorId        String?  @db.ObjectId
-//   entity         String
-//   entityId       String   // PK value as string/ObjectId
-//   action         String
-//   before         Json?
-//   after          Json?
-//   ip             String?
-//   userAgent      String?
-//   createdAt      DateTime @default(now())
+// -------------------- Auditing --------------------
+model AuditLog {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  actorId        String?  @db.ObjectId
+  entity         String
+  entityId       String   // PK value as string/ObjectId
+  action         String
+  before         Json?
+  after          Json?
+  ip             String?
+  userAgent      String?
+  createdAt      DateTime @default(now())
 
-//   organization   Organization? @relation(fields: [organizationId], references: [id])
-//   actor          User?         @relation(fields: [actorId], references: [id])
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  actor          User?         @relation(fields: [actorId], references: [id])
 
-//   @@index([organizationId, entity, entityId, createdAt])
-// }
+  @@index([organizationId, entity, entityId, createdAt])
+}
