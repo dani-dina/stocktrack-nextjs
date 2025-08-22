@@ -635,30 +635,30 @@ model SalesOrderLine {
   @@index([salesOrderId])
 }
 
-model CustomerInvoice {
-  id             String        @id @default(auto()) @map("_id") @db.ObjectId
-  organizationId String        @db.ObjectId
-  customerId     String        @db.ObjectId
-  salesOrderId   String?       @db.ObjectId
-  code           String
-  issueDate      DateTime      @default(now())
-  dueDate        DateTime?
-  currency       CurrencyCode
-  subtotal       Decimal       @db.Decimal128 @default(0)
-  taxTotal       Decimal       @db.Decimal128 @default(0)
-  grandTotal     Decimal       @db.Decimal128 @default(0)
-  status         PaymentStatus @default(UNPAID)
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+// model CustomerInvoice {
+//   id             String        @id @default(auto()) @map("_id") @db.ObjectId
+//   organizationId String        @db.ObjectId
+//   customerId     String        @db.ObjectId
+//   salesOrderId   String?       @db.ObjectId
+//   code           String
+//   issueDate      DateTime      @default(now())
+//   dueDate        DateTime?
+//   currency       CurrencyCode
+//   subtotal       Decimal       @db.Decimal128 @default(0)
+//   taxTotal       Decimal       @db.Decimal128 @default(0)
+//   grandTotal     Decimal       @db.Decimal128 @default(0)
+//   status         PaymentStatus @default(UNPAID)
+//   createdAt      DateTime      @default(now())
+//   updatedAt      DateTime      @updatedAt
 
-  organization   Organization? @relation(fields: [organizationId], references: [id])
-  customer       Customer?     @relation(fields: [customerId], references: [id])
-  salesOrder     SalesOrder?   @relation(fields: [salesOrderId], references: [id])
-  payments       Payment[]
+//   organization   Organization? @relation(fields: [organizationId], references: [id])
+//   customer       Customer?     @relation(fields: [customerId], references: [id])
+//   salesOrder     SalesOrder?   @relation(fields: [salesOrderId], references: [id])
+//   payments       Payment[]
 
-  @@unique([organizationId, code])
-  @@index([customerId, status])
-}
+//   @@unique([organizationId, code])
+//   @@index([customerId, status])
+// }
 
 // -------------------- Payments --------------------
 model Payment {
