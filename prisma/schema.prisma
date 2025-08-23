@@ -613,27 +613,27 @@ model SalesOrder {
   @@index([organizationId, customerId, status])
 }
 
-model SalesOrderLine {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  salesOrderId   String   @db.ObjectId
-  productId      String   @db.ObjectId
-  description    String?
-  qtyOrdered     Decimal  @db.Decimal128
-  qtyShipped     Decimal  @db.Decimal128 @default(0)
-  uomId          String   @db.ObjectId
-  unitPrice      Decimal  @db.Decimal128
-  taxId          String?  @db.ObjectId
-  lineTotal      Decimal  @db.Decimal128 @default(0)
+// model SalesOrderLine {
+//   id             String   @id @default(auto()) @map("_id") @db.ObjectId
+//   salesOrderId   String   @db.ObjectId
+//   productId      String   @db.ObjectId
+//   description    String?
+//   qtyOrdered     Decimal  @db.Decimal128
+//   qtyShipped     Decimal  @db.Decimal128 @default(0)
+//   uomId          String   @db.ObjectId
+//   unitPrice      Decimal  @db.Decimal128
+//   taxId          String?  @db.ObjectId
+//   lineTotal      Decimal  @db.Decimal128 @default(0)
 
-  salesOrder     SalesOrder?    @relation(fields: [salesOrderId], references: [id])
-  product        Product?       @relation(fields: [productId], references: [id])
-  uom            UnitOfMeasure? @relation(fields: [uomId], references: [id])
-  tax            Tax?           @relation(fields: [taxId], references: [id])
+//   salesOrder     SalesOrder?    @relation(fields: [salesOrderId], references: [id])
+//   product        Product?       @relation(fields: [productId], references: [id])
+//   uom            UnitOfMeasure? @relation(fields: [uomId], references: [id])
+//   tax            Tax?           @relation(fields: [taxId], references: [id])
 
-  stockMoves     StockMovement[]
+//   stockMoves     StockMovement[]
 
-  @@index([salesOrderId])
-}
+//   @@index([salesOrderId])
+// }
 
 // model CustomerInvoice {
 //   id             String        @id @default(auto()) @map("_id") @db.ObjectId
