@@ -18,13 +18,13 @@ export const navLinks : NavLink[] = [
   {
     id : '1',
     label: 'Features',
-    href: '/#features',
+    href: '/features',
     isExternal: false,
   },
   {
     id : '2',
     label: 'Solutions',
-    href: '#',
+    href: '/solutions',
     submenu: [
       {
         id : '00',
