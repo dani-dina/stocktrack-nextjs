@@ -46,7 +46,7 @@ export const navLinks : NavLink[] = [
   {
     id : '3',
     label: 'Pricing',
-    href: '/#pricing',
+    href: '/pricing',
   },
   {
     id : '4',
