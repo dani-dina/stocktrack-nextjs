@@ -277,6 +277,6 @@ export const growingSteps : GrowingStep[] = [
     {
     id : '2',
     number : '03',
-    message : 'Some growing message here is theere or get back to the hell or fuck off'
+    message : 'Some growing message here is theere or lorem ipsum dummp text here'
   },
 ]
