@@ -56,7 +56,7 @@ export const navLinks : NavLink[] = [
   {
     id : '5',
     label: 'Company',
-    href: '#',
+    href: '/company',
     submenu: [
       {
         id : '000',
