@@ -79,7 +79,7 @@ export const navLinks : NavLink[] = [
   {
     id : '6',
     label: 'Contact',
-    href: '/#contact',
+    href: '/contact',
     isExternal: false,
   }
 ];
