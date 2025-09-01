@@ -76,12 +76,12 @@ export const navLinks : NavLink[] = [
       },
     ],
   },
-  // {
-  //   id : '6',
-  //   label: 'Contact',
-  //   href: '/contact',
-  //   isExternal: false,
-  // }
+  {
+    id : '6',
+    label: 'Contact',
+    href: '/contact',
+    isExternal: false,
+  }
 ];
 
 export const featuresCard : Feature [] = [
