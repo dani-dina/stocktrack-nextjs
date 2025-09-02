@@ -13,8 +13,7 @@ const Hero : React.FC = () => {
               The World's <br/> Biggest Inventory Managment System
             </h1>
             <p className='text-gray-400 my-4 py-4'>
-              If you want, I can make you a side-by-side code demo of the same animation in Framer Motion and
-              GSAP so you can see the difference in approach.
+
             </p>
             <Button
               children='Get Started'
