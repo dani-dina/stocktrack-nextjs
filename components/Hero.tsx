@@ -13,7 +13,8 @@ const Hero : React.FC = () => {
               The World's <br/> Biggest Inventory Managment System
             </h1>
             <p className='text-gray-400 my-4 py-4'>
-
+              Track, manage, and optimize your inventory in real-time with ease.
+              Stay in control of stock, sales, and growth — all in one powerful platform.
             </p>
             <Button
               children='Get Started'
