@@ -296,7 +296,7 @@ export const testimonials : Testimonial[] = [
     role: "E-commerce Founder",
     message:
       "Managing thousands of SKUs used to be a nightmare. Now I can track everything in real-time, even from my phone.",
-    image: "/profile.jpg",
+    image: "/profile3.jpg",
   },
   {
     id: "3",
@@ -304,6 +304,6 @@ export const testimonials : Testimonial[] = [
     role: "Retail Store Owner",
     message:
       "This system helped me cut down overstock costs and gave me insights to grow my business. Highly recommend it!",
-    image: "/profile.jpg",
+    image: "/profile2.jpg",
   },
 ];
