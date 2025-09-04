@@ -280,3 +280,30 @@ export const growingSteps: GrowingStep[] = [
     message: 'Use real-time analytics to optimize inventory, reduce waste, and boost profits.',
   },
 ];
+
+const testimonials = [
+  {
+    id: "1",
+    name: "Sarah Johnson",
+    role: "Operations Manager",
+    message:
+      "Since we started using this platform, our stockouts dropped by 40% and our team works twice as fast. It’s a game-changer!",
+    image: "/profile1.jpg",
+  },
+  {
+    id: "2",
+    name: "Michael Smith",
+    role: "E-commerce Founder",
+    message:
+      "Managing thousands of SKUs used to be a nightmare. Now I can track everything in real-time, even from my phone.",
+    image: "/profile2.jpg",
+  },
+  {
+    id: "3",
+    name: "Amina Tesfaye",
+    role: "Retail Store Owner",
+    message:
+      "This system helped me cut down overstock costs and gave me insights to grow my business. Highly recommend it!",
+    image: "/profile3.jpg",
+  },
+];
