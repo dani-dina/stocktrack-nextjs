@@ -29,8 +29,10 @@ const Partners : React.FC = () => {
               <div className=' md:px-15 py-7 '>
                 <h1 className='text-2xl font-semibold py-7 '>Let's Try Our Service Now !</h1>
                 <p className='text-white/60'>
-                  Everything you need to accept card payments <br /> and grow yout business anywhere on the planet
+                  Everything you need to track inventory in real-time <br /> 
+                  and grow your business anywhere in the world.
                 </p>
+
               </div>
               <div className=''>
                 <Button
