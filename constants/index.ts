@@ -5,7 +5,7 @@ import { NavLink } from '../types';
 import { FooterSection } from '../types';
 import { ProgressItem } from '../types';
 import { PricingPlan } from '../types';
-
+import { Testimonial } from '../types';
 // constants/navLinks.ts
 export const navLinks : NavLink[] = [
   {
@@ -281,7 +281,7 @@ export const growingSteps: GrowingStep[] = [
   },
 ];
 
-const testimonials = [
+const testimonials : Testimonial[] = [
   {
     id: "1",
     name: "Sarah Johnson",
