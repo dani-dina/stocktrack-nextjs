@@ -76,3 +76,11 @@ export type GrowingStep = {
   number: string;
   message: string;
 };
+
+export interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  message: string;
+  image: string;
+}
