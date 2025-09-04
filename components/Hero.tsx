@@ -22,20 +22,21 @@ const Hero : React.FC = () => {
             />
             <div className='hidden md:flex items-center justify-between mt-3 py-6'>
               <div>
-                <h1 className='text-2xl font-semibold font-[poppins] text-white'>$ 75 Million</h1>
-                <p className='text-gray-400 pt-2'>UI animations in React</p>
+                <h1 className='text-2xl font-semibold font-[poppins] text-white'>5,000+</h1>
+                <p className='text-gray-400 pt-2'>Businesses Using Our Platform</p>
               </div>
               <div className='w-[1px] bg-gray-400 rounded-lg py-7'></div>
               <div>
-                <h1 className='text-2xl font-semibold font-[poppins] text-white'>$ 75 Million</h1>
-                <p className='text-gray-400 pt-2'>UI animations in React</p>
+                <h1 className='text-2xl font-semibold font-[poppins] text-white'>10M+</h1>
+                <p className='text-gray-400 pt-2'>Products Tracked Daily</p>
               </div>
               <div className='w-[1px] bg-gray-400 rounded-lg py-7'></div>
               <div>
-                <h1 className='text-2xl font-semibold font-[poppins] text-white'>$ 75 Million</h1>
-                <p className='text-gray-400 pt-2'>UI animations in React</p>
+                <h1 className='text-2xl font-semibold font-[poppins] text-white'>99.9%</h1>
+                <p className='text-gray-400 pt-2'>Uptime & Reliability</p>
               </div>
             </div>
+
           </div>
         </div>
         <div className='md:w-1/2 flex items-center justify-start md:justify-end py-4 z-2'>
