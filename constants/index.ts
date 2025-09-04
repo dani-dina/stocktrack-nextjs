@@ -263,3 +263,20 @@ export const pricingPlans : PricingPlan [] = [
 ];
 
 /* Growing steps */
+export const growingSteps: GrowingStep[] = [
+  {
+    id: '0',
+    number: '01',
+    message: 'Start by connecting your warehouses, stores, or sales channels in minutes.',
+  },
+  {
+    id: '1',
+    number: '02',
+    message: 'Automatically track stock levels, purchases, and sales across all locations.',
+  },
+  {
+    id: '2',
+    number: '03',
+    message: 'Use real-time analytics to optimize inventory, reduce waste, and boost profits.',
+  },
+];
