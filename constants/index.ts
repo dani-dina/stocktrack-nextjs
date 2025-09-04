@@ -281,14 +281,14 @@ export const growingSteps: GrowingStep[] = [
   },
 ];
 
-const testimonials : Testimonial[] = [
+export const testimonials : Testimonial[] = [
   {
     id: "1",
     name: "Sarah Johnson",
     role: "Operations Manager",
     message:
       "Since we started using this platform, our stockouts dropped by 40% and our team works twice as fast. It’s a game-changer!",
-    image: "/profile1.jpg",
+    image: "/profile.jpg",
   },
   {
     id: "2",
@@ -296,7 +296,7 @@ const testimonials : Testimonial[] = [
     role: "E-commerce Founder",
     message:
       "Managing thousands of SKUs used to be a nightmare. Now I can track everything in real-time, even from my phone.",
-    image: "/profile2.jpg",
+    image: "/profile.jpg",
   },
   {
     id: "3",
@@ -304,6 +304,6 @@ const testimonials : Testimonial[] = [
     role: "Retail Store Owner",
     message:
       "This system helped me cut down overstock costs and gave me insights to grow my business. Highly recommend it!",
-    image: "/profile3.jpg",
+    image: "/profile.jpg",
   },
 ];
