@@ -172,44 +172,45 @@ export const footerLinks : FooterSection[] = [
   }
 ];
 
-export const progressItem : ProgressItem[] = [
+export const progressItems: ProgressItem[] = [
   {
-    id : '0',
-    title : '100 M',
-    description : 'Total Supply',
-    isLine : false
+    id: "0",
+    title: "100 M",
+    description: "Total items available in stock across all warehouses",
+    isLine: false,
   },
   {
-    id : '1',
-    isLine : true
+    id: "1",
+    isLine: true,
   },
   {
-    id : '2',
-    title : '14 M',
-    description : 'Pre-ICO',
-    isLine : false
+    id: "2",
+    title: "14 M",
+    description: "Items reserved for pre-orders and pending shipments",
+    isLine: false,
   },
   {
-    id : '3',
-    isLine : true
+    id: "3",
+    isLine: true,
   },
   {
-    id : '4',
-    title : '78%',
-    description : 'Token Sale',
-    isLine : false
+    id: "4",
+    title: "78%",
+    description: "Percentage of products currently sold or allocated",
+    isLine: false,
   },
   {
-    id : '5',
-    isLine : true
+    id: "5",
+    isLine: true,
   },
   {
-    id : '6',
-    title : '89.65%',
-    description : 'Hidden Cap',
-    isLine : false
-  }
+    id: "6",
+    title: "89.65%",
+    description: "Warehouse capacity utilization across all branches",
+    isLine: false,
+  },
 ];
+
 
 /* pricing plans */
 export const pricingPlans : PricingPlan [] = [
