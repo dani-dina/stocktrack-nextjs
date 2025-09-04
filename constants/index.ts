@@ -167,7 +167,7 @@ export const footerLinks : FooterSection[] = [
       { name: 'Email: support@ims.com', href: 'mailto:support@ims.com' },
       { name: 'Phone: +1 (555) 123-4567', href: 'tel:+15551234567' },
       { name: 'Location: New York, USA', href: '/location' },
-      { name: 'Location: New York, USA', href: '/location' }
+      { name: 'Address 2: New York, USA', href: '/location' }
     ]
   }
 ];
