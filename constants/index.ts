@@ -263,20 +263,3 @@ export const pricingPlans : PricingPlan [] = [
 ];
 
 /* Growing steps */
-export const growingSteps : GrowingStep[] = [
-  {
-    id : '0',
-    number : '01',
-    message : 'Some growing message here is theere or lorem ipsum dummp text here '
-  },
-    {
-    id : '1',
-    number : '02',
-    message : 'Some growing message here is theere or lorem ipsum dummp text here'
-  },
-    {
-    id : '2',
-    number : '03',
-    message : 'Some growing message here is theere or lorem ipsum dummp text here'
-  },
-]
