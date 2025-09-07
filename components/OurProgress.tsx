@@ -1,4 +1,3 @@
-// components/OurProgress.tsx
 
 import { progressItems } from "../constants";
 
