@@ -33,7 +33,7 @@ export type Feature = {
   description: string;
 };
 
-/** Footer **/
+
 export type FooterLink = {
   name: string;
   href: string;
@@ -84,3 +84,4 @@ export interface Testimonial {
   message: string;
   image: string;
 }
+
