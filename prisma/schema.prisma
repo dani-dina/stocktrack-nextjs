@@ -1,4 +1,4 @@
-// ------------------------------------------------------------
+// -----------------------------------------------------------
 // Prisma schema — Inventory Management (MongoDB)
 // - Provider: MongoDB
 // - Multi-tenant (Organization + orgId on records)
@@ -8,7 +8,7 @@
 // - Decimal -> Decimal128
 // - Avoids Mongo-unsafe unique constraints on nullable fields
 //   (enforce some uniqueness in app layer)
-// ------------------------------------------------------------
+// -----------------------------------------------------------
 
 generator client {
   provider = "prisma-client-js"
