@@ -8,7 +8,8 @@
 // - Decimal -> Decimal128
 // - Avoids Mongo-unsafe unique constraints on nullable fields
 //   (enforce some uniqueness in app layer)
-// --------------------------------------------------------
+// ----------------------------------------------------
+
 
 generator client {
   provider = "prisma-client-js"
