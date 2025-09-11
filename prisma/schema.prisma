@@ -1,4 +1,4 @@
-// --------------------------------------------------------
+// -----------------------------------------------------
 // Prisma schema — Inventory Management (MongoDB)
 // - Provider: MongoDB
 // - Multi-tenant (Organization + orgId on records)
