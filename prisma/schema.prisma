@@ -371,7 +371,6 @@ model Inventory {
   location       Location?     @relation(fields: [locationId], references: [id])
   lot            Lot?          @relation(fields: [lotId], references: [id])
 
-  // ⚠️ No unique here because some fields are nullable and Mongo unique with null is tricky.
   @@index([organizationId, productId, warehouseId, locationId, lotId])
   @@index([productId, warehouseId])
 }
