@@ -350,8 +350,8 @@ model SerialNumber {
   currentWarehouse   Warehouse?    @relation(fields: [currentWarehouseId], references: [id])
   currentLocation    Location?     @relation(fields: [currentLocationId], references: [id])
 
-  @@unique([organizationId, productId, serial])
-  @@index([currentWarehouseId, currentLocationId])
+  // @@unique([organizationId, productId, serial])
+  // @@index([currentWarehouseId, currentLocationId])
 }
 
 model Inventory {
