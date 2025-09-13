@@ -453,7 +453,7 @@ model Customer {
 
   organization   Organization? @relation(fields: [organizationId], references: [id])
   salesOrders    SalesOrder[]
-  invoices       CustomerInvoice[]
+  // invoices       CustomerInvoice[]
 
   @@unique([organizationId, code])
   @@index([organizationId, name])
