@@ -459,7 +459,7 @@ model Customer {
   @@index([organizationId, name])
 }
 
-// -------------------- Pricing & Tax ------------------
+// -------------------- Pricing & Tax ---------------
 model PriceList {
   id             String       @id @default(auto()) @map("_id") @db.ObjectId
   organizationId String       @db.ObjectId
