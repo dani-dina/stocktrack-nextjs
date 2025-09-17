@@ -476,20 +476,20 @@ model Customer {
 //   @@index([organizationId, isDefault])
 // }
 
-model PriceListItem {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  priceListId    String   @db.ObjectId
-  productId      String   @db.ObjectId
-  price          Decimal  @db.Decimal128
-  minQty         Decimal? @db.Decimal128
+// model PriceListItem {
+//   id             String   @id @default(auto()) @map("_id") @db.ObjectId
+//   priceListId    String   @db.ObjectId
+//   productId      String   @db.ObjectId
+//   price          Decimal  @db.Decimal128
+//   minQty         Decimal? @db.Decimal128
 
-  priceList      PriceList? @relation(fields: [priceListId], references: [id])
-  product        Product?   @relation(fields: [productId], references: [id])
+//   priceList      PriceList? @relation(fields: [priceListId], references: [id])
+//   product        Product?   @relation(fields: [productId], references: [id])
 
-  // cannot use unique on nullable minQty safely; index for speed
-  @@index([priceListId, productId, minQty])
-  @@index([productId])
-}
+//   // cannot use unique on nullable minQty safely; index for speed
+//   @@index([priceListId, productId, minQty])
+//   @@index([productId])
+// }
 
 model Tax {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
