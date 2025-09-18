@@ -459,22 +459,22 @@ model Customer {
   @@index([organizationId, name])
 }
 
-// -------------------- Pricing & Tax ------------
-// model PriceList {
-//   id             String       @id @default(auto()) @map("_id") @db.ObjectId
-//   organizationId String       @db.ObjectId
-//   name           String
-//   currency       CurrencyCode
-//   isDefault      Boolean      @default(false)
-//   createdAt      DateTime     @default(now())
-//   updatedAt      DateTime     @updatedAt
+-------------------- Pricing & Tax ------------
+model PriceList {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String       @db.ObjectId
+  name           String
+  currency       CurrencyCode
+  isDefault      Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 
-//   organization   Organization? @relation(fields: [organizationId], references: [id])
-//   items          PriceListItem[]
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  items          PriceListItem[]
 
-//   @@unique([organizationId, name])
-//   @@index([organizationId, isDefault])
-// }
+  @@unique([organizationId, name])
+  @@index([organizationId, isDefault])
+}
 
 // model PriceListItem {
 //   id             String   @id @default(auto()) @map("_id") @db.ObjectId
